@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate, Link } from 'react-router-dom';
-import { UserPlus, Mail, Lock, ShieldCheck, ArrowRight } from 'lucide-react';
+import { UserPlus, Mail, Lock, ArrowRight } from 'lucide-react';
 import './auth.css';
 
 const Register = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [role, setRole] = useState('student');
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
@@ -17,7 +16,7 @@ const Register = () => {
         setLoading(true);
         setError('');
         try {
-            await axios.post('http://localhost:5000/api/auth/register', { email, password, role });
+            await axios.post('http://localhost:5000/api/auth/register', { email, password });
             navigate('/login');
         } catch (err) {
             setError(err.response?.data?.error || 'Registration failed. Try again.');
@@ -65,17 +64,6 @@ const Register = () => {
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
                         />
-                    </div>
-
-                    <div className="input-wrapper">
-                        <ShieldCheck className="input-icon" size={20} />
-                        <select
-                            value={role}
-                            onChange={(e) => setRole(e.target.value)}
-                        >
-                            <option value="student">I am a Student</option>
-                            <option value="admin">I am an Admin</option>
-                        </select>
                     </div>
                 </div>
 
